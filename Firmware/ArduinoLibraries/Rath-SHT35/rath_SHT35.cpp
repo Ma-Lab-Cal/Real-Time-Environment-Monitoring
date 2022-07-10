@@ -70,7 +70,7 @@ float SHT35::getTemperatureK() {
     return -1;
   }
   
-  return temperature_c - 273.15;
+  return temperature_c + 273.15;
 }
 
 float SHT35::getHumidity() {

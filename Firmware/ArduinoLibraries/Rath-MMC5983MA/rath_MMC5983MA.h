@@ -25,23 +25,10 @@ namespace rath {
       // use default I2CDevice constructor
       MMC5983MA() : I2CDevice(I2C0, I2C_ADDR) {};
 
-      /**
-       * @brief Initialize the I2C device. The microcontroller is in master mode.
-       *
-       */
       void init();
 
-      /**
-       * @brief Perform a software reset. It will clear all registers and read OTP
-       * as part of its startup routine. The power on time is 10 ms.
-       * 
-       */
       void reset();
 
-      /**
-       * @brief Read measurement data.
-       *
-       */
       uint8_t getID();
 
       void performSET();
@@ -57,10 +44,6 @@ namespace rath {
       float getY();
       float getZ();
 
-      /**
-       * @brief Read measurement data.
-       *
-       */
       float getTemperature();
 
     private:
