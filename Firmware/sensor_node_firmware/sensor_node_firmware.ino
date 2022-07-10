@@ -93,5 +93,5 @@ void loop() {
   Serial.println(str);
   BLESerializerNode.transmit((uint8_t *)str, strlen(str));
 
-  delay(15000);
+  delay(150);
 }
