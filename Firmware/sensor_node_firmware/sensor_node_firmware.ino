@@ -77,7 +77,7 @@ void loop() {
   
   char str[256];
 
-  sprintf(str, "{\"name\": \"%s\", \"data\": [%f, %f, %d, %d, %d, %f, %f, %f, %f]}", 
+  sprintf(str, "[\"%s\", %f, %f, %d, %d, %d, %f, %f, %f, %f]", 
     NODE_NAME,
     temperature, 
     humidity,
@@ -93,5 +93,5 @@ void loop() {
   Serial.println(str);
   BLESerializerNode.transmit((uint8_t *)str, strlen(str));
 
-  delay(100);
+  delay(15000);
 }
