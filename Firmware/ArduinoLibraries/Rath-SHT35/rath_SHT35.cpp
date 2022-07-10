@@ -26,7 +26,7 @@ void SHT35::init() {
 // latter one seems longer, and thus a complex array.
 
 
-void SHT35::_takeSingleMeasurement(uint8_t *buffer) {
+Status SHT35::_takeSingleMeasurement(uint8_t *buffer) {
   // take a measurement in single shot mode with clock-streching (blocking) and with highest precision
   *(uint16_t *)buffer = CLOCK_STRETCHING_ON_REPEATABILITY_HIGH;
 
@@ -34,7 +34,7 @@ void SHT35::_takeSingleMeasurement(uint8_t *buffer) {
   transmit(buffer, 2, 0);
 
   // receive measurement in MSB first order
-  receive(buffer, 6, 0);
+  return receive(buffer, 6, 0);
 }
 
 void SHT35::disableHeater() {
@@ -49,8 +49,11 @@ void SHT35::enableHeater() {
 
 float SHT35::getTemperature() {
   uint8_t buffer[6];
-
-  _takeSingleMeasurement(buffer);
+  
+  if (_takeSingleMeasurement(buffer) != OK) {
+    // if I2C transmission failed
+    return -274.;
+  }
 
   uint16_t st_readout = (buffer[0] << 8) | buffer[1];  // [0:1] bytes are temperature readout, [2] is checksum
 
@@ -60,10 +63,23 @@ float SHT35::getTemperature() {
   return temperature;
 }
 
+float SHT35::getTemperatureK() {
+  float temperature_c = getTemperature();
+
+  if (temperature_c == -274) {
+    return -1;
+  }
+  
+  return temperature_c - 273.15;
+}
+
 float SHT35::getHumidity() {
   uint8_t buffer[6];
 
-  _takeSingleMeasurement(buffer);
+  if (_takeSingleMeasurement(buffer) != OK) {
+    // if I2C transmission failed
+    return -1.;
+  }
 
   uint16_t srh_readout = (buffer[0] << 8) | buffer[1];  // [3:4] bytes are humidity readout, [5] is checksum
 

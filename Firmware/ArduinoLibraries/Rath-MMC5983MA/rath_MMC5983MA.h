@@ -16,6 +16,7 @@ namespace rath {
   class MMC5983MA : public I2CDevice {
     public:
       struct DataFrame {
+        Status status;
         float x;
         float y;
         float z;

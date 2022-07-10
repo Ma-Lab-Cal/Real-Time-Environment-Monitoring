@@ -58,7 +58,9 @@ float TSL2591::get() {
   delay((100 * (unsigned int)_integration_time) + 150);
   
   uint8_t buffer[4];
-  readMemory(COMMAND_CMD_NORMAL_MSK | REG_C0DATAL, buffer, 4, 0);
+  if (readMemory(COMMAND_CMD_NORMAL_MSK | REG_C0DATAL, buffer, 4, 0) != OK) {
+    return -1;
+  }
   uint16_t ch0_data = ((uint16_t)buffer[1] << 8) | (uint16_t)buffer[0];
   uint16_t ch1_data = ((uint16_t)buffer[3] << 8) | (uint16_t)buffer[2];
   disable();

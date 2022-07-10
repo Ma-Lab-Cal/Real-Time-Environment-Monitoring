@@ -53,13 +53,13 @@ MMC5983MA::DataFrame MMC5983MA::performMeasurement() {
     readMemory(REG_STATUS, buffer, 1, 0);
   }
 
-  readMemory(REG_X_OUT0, buffer, 7, 0);
+  Status status = readMemory(REG_X_OUT0, buffer, 7, 0);
 
-  
   uint32_t x = ((uint32_t)buffer[0] << 10) | ((uint32_t)buffer[1] << 2) | ((uint32_t)READ_BITS(buffer[6], XYZ_OUT2_X_OUT_MSK) >> 6);
   uint32_t y = ((uint32_t)buffer[2] << 10) | ((uint32_t)buffer[3] << 2) | ((uint32_t)READ_BITS(buffer[6], XYZ_OUT2_X_OUT_MSK) >> 6);
   uint32_t z = ((uint32_t)buffer[4] << 10) | ((uint32_t)buffer[5] << 2) | ((uint32_t)READ_BITS(buffer[6], XYZ_OUT2_X_OUT_MSK) >> 6);
   
+  measurement.status = status;
   measurement.x = (float)x * resolution;
   measurement.y = (float)y * resolution;
   measurement.z = (float)z * resolution;

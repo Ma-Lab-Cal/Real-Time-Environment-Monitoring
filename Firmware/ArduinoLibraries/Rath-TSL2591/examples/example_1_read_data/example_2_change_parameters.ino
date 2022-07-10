@@ -1,5 +1,5 @@
 /**
- * @file example_1_read_data.ino
+ * @file example_2_change_parameters.ino
  * @date 2022-07-09
  *
  * @copyright Copyright (c) 2022
@@ -17,6 +17,9 @@ void setup() {
 
   sensor.init();
 
+  sensor.setGain(rath::TSL2591::Gain::GAIN_MEDIUM);
+  sensor.setIntegrationTime(rath::TSL2591::IntegrationTime::T_600_MS);
+  
   Serial.println("ready.");
 
   Serial.print("Sensor ID: "); Serial.println(sensor.getID());

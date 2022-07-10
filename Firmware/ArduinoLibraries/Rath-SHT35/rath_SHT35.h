@@ -36,21 +36,31 @@ namespace rath {
       void enableHeater();
 
       /**
-       * @brief Read temperature readout from the sensor.
+       * @brief Read temperature readout from the sensor. 
+       * Returns -274 if failed to get a valid sensor reading.
        * 
        * @return <float> temperature in degree Celsius
        */
       float getTemperature();
+      
+      /**
+       * @brief Read temperature readout from the sensor. 
+       * Returns -1 if failed to get a valid sensor reading.
+       * 
+       * @return <float> temperature in Kelvin
+       */
+      float getTemperatureK();
 
       /**
        * @brief Read humidity readout from the sensor.
+       * Returns -1 if failed to get a valid sensor reading.
        * 
        * @return <float> humidity in range from 0.0 to 1.0
        */
       float getHumidity();
     
     private:
-      void _takeSingleMeasurement(uint8_t *buffer);
+      Status _takeSingleMeasurement(uint8_t *buffer);
 
       // using const instead of define due to the rationale here: 
       // https://www.baldengineer.com/const-vs-define-when-do-you-them-and-why.html

@@ -10,7 +10,7 @@
 
 #include "rath_MMC5983MA.h"
 
-rath::MMC5983MA sensor = rath::MMC5983MA();  // I2C address for PMSA003I is 0x12
+rath::MMC5983MA sensor = rath::MMC5983MA();
 
 void setup() {
   Serial.begin(115200);
@@ -23,10 +23,17 @@ void setup() {
 }
 
 void loop() {
-  rath::MMC5983MA::DataFrame data_frame = sensor.get();
-  float x = data_frame.x;
-  float y = data_frame.y;
-  float z = data_frame.z;
+  rath::MMC5983MA::DataFrame data = sensor.get();
+
+  if (data.status != rath::OK) {
+    Serial.print("Error reading sensor, error code: ");
+    Serial.println(data.status);
+    return;
+  }
+  
+  float x = data.x;
+  float y = data.y;
+  float z = data.z;
   
   float temperature = sensor.getTemperature();
 
