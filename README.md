@@ -2,7 +2,7 @@
 
 This repository contains all the Arduino firmware code used by the real-time environment monitoring system.
 
-The PCB hardware design can be accessed [here](). 
+The PCB hardware design can be accessed [here](https://oshwhub.com/t-k-233/urap-sensor-node-v1). 
 
 ## Design Rationale
 
